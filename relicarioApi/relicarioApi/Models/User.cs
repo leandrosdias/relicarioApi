@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+
+namespace relicarioApi.Models
+{
+    public class User : ModelBase
+    {
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public string Email { get; set; }
+        public string ConfirmationCode { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
+        public string Token { get; set; }
+        public IEnumerable<UserAdress> Enderecos { get; set; }
+        public IEnumerable<CreditCard> Cards { get; set; }
+    }
+}
