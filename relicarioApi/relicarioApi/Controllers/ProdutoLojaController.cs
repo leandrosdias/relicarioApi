@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using relicarioApi.Domain.Commands.Requests;
 using relicarioApi.Domain.Commands.Responses;
 using relicarioApi.Domain.Handlers;
+using relicarioApi.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace relicarioApi.Controllers
@@ -14,9 +16,14 @@ namespace relicarioApi.Controllers
     {
         [HttpGet]
         // GET: ProdutoController
-        public IActionResult Index()
+        [HttpGet]
+        public IEnumerable<ProdutoLoja> RecuperarFilmes()
         {
-            return Ok();
+            return new List<ProdutoLoja>
+            {
+                new ProdutoLoja{Nome ="Nome1"},
+                new ProdutoLoja{Nome ="Nome2"},
+            };
         }
 
         [HttpGet("{id}")]
@@ -28,7 +35,7 @@ namespace relicarioApi.Controllers
 
         [HttpPost]
         // GET: ProdutoController/Create
-        public Task<CreateProdutoLojaResponse> Create([FromServices] IMediator handler, 
+        public Task<CreateProdutoLojaResponse> Create([FromServices] IMediator handler,
             [FromBody] CreateProdutoLojaRequest request)
         {
             return handler.Send(request);
