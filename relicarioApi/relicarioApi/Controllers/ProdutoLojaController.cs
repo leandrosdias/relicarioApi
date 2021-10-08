@@ -14,7 +14,6 @@ namespace relicarioApi.Controllers
 
     public class ProdutoLojaController : ControllerBase
     {
-        [HttpGet]
         // GET: ProdutoController
         [HttpGet]
         public IEnumerable<ProdutoLoja> RecuperarFilmes()

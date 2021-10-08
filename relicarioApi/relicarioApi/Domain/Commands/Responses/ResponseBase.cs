@@ -7,6 +7,25 @@ namespace relicarioApi.Domain.Commands.Responses
 {
     public class ResponseBase
     {
-        public DateTime DateTs { get; set; }
+        public DateTime DateTs => DateTime.Now;
+        public bool Sucess { get; set; }
+        public IEnumerable<string> ErrorList { get; set; }
+
+        public ResponseBase()
+        {
+            Sucess = true;
+        }
+
+        public ResponseBase(bool sucess, IEnumerable<string> errorList)
+        {
+            Sucess = sucess;
+            ErrorList = errorList;
+        }
+
+        public ResponseBase(bool sucess, string error)
+        {
+            Sucess = sucess;
+            ErrorList = new List<string> { error };
+        }
     }
 }

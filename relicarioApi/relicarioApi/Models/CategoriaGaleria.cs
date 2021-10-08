@@ -1,5 +1,8 @@
-﻿namespace relicarioApi.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace relicarioApi.Models
 {
+    [Table("GALERIA_CATEGORIA")]
     public class CategoriaGaleria : ModelBase
     {
         public int Codigo { get; set; }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace relicarioApi.Models
 {
+    [Table("LOJA_PRODUTO_ATRIBUTO")]
     public class ProdutoLojaAtributo : ModelBase
     {
         public string Nome { get; set; }

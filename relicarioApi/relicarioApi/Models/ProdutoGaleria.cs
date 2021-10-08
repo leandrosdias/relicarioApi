@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace relicarioApi.Models
 {
+    [Table("GALERIA_PRODUTO")]
     public class ProdutoGaleria : ModelBase
     {
         public int Codigo { get; set; }

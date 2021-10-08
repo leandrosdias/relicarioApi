@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace relicarioApi.Models
 {
+    [Table("USUARIO")]
     public class User : ModelBase
     {
         public string Nome { get; set; }

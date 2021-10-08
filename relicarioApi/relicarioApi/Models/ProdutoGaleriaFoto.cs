@@ -1,11 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace relicarioApi.Models
 {
-    public class ProdutoGaleriaFoto
+    [Table("GALERIA_PRODUTO_FOTO")]
+    public class ProdutoGaleriaFoto : ModelBase
     {
         public int Sequencia { get; set; }
-        public Array[] Foto { get; set; }
+        public byte[] Foto { get; set; }
         public Guid ProdutoGategoriaId { get; set; }
     }
 }

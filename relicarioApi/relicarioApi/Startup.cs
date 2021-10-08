@@ -1,15 +1,23 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using relicarioApi.Data;
+using relicarioApi.Repositories;
+using relicarioApi.Repositories.Galeria.Artistas;
+using relicarioApi.Services;
+using relicarioApi.Services.Correio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace relicarioApi
@@ -26,8 +34,20 @@ namespace relicarioApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(opts => opts.UseMySQL(Configuration.GetConnectionString("DbConnection")));
 
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddTransient<IConsumeCorreioFrete, ConsumeFreteProduto>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient<IArtistaRepository, ArtistaRepository>();
+            services.AddTransient<IProdutoLojaRepository, ProdutoLojaRepository>();
+            services.AddTransient<ICategoriaLojaRepository, CategoriaLojaRepository>();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "relicarioApi", Version = "v1" });

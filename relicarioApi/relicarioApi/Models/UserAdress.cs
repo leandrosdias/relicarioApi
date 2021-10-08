@@ -1,5 +1,8 @@
-﻿namespace relicarioApi.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace relicarioApi.Models
 {
+    [Table("USUARIO_ENDERECO")]
     public class UserAdress : ModelBase
     {
         public int Sequencia { get; set; }
