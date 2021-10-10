@@ -14,13 +14,13 @@ namespace relicarioApi.Domain.Handlers.Galeria.Artistas
 {
     public class ChangeArtistaHandler : IRequestHandler<ChangeArtistaRequest, ChangeArtistaResponse>
     {
-        private readonly IArtistaRepository _ArtistaRepository;
+        private readonly IArtistaRepository _artistaRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
         public ChangeArtistaHandler(IArtistaRepository ArtistaRepository, IMapper mapper, IUnitOfWork uow)
         {
-            _ArtistaRepository = ArtistaRepository;
+            _artistaRepository = ArtistaRepository;
             _mapper = mapper;
             _uow = uow;
         }
@@ -30,7 +30,7 @@ namespace relicarioApi.Domain.Handlers.Galeria.Artistas
             try
             {
                 var artista = _mapper.Map<Artista>(request);
-                var result = _ArtistaRepository.Update(artista);
+                var result = _artistaRepository.Update(artista);
                 _uow.Commit();
                 return Task.FromResult(_mapper.Map<ChangeArtistaResponse>(result));
             }

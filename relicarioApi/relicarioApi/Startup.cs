@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using relicarioApi.Data;
 using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Artistas;
+using relicarioApi.Repositories.Galeria.Categorias;
 using relicarioApi.Services;
 using relicarioApi.Services.Correio;
 using System;
@@ -42,6 +43,7 @@ namespace relicarioApi
             services.AddTransient<IConsumeCorreioFrete, ConsumeFreteProduto>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<ICategoriaGaleriaRepository, CategoriaGaleriaRepository>();
             services.AddTransient<IArtistaRepository, ArtistaRepository>();
             services.AddTransient<IProdutoLojaRepository, ProdutoLojaRepository>();
             services.AddTransient<ICategoriaLojaRepository, CategoriaLojaRepository>();

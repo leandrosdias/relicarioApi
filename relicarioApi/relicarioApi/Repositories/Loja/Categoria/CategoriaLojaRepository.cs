@@ -52,7 +52,7 @@ namespace relicarioApi.Repositories
                 categoriasQuery = categoriasQuery.Where(x => param.Codigos.Contains(x.Codigo));
             }
 
-            return categoriasQuery.ToList();
+            return categoriasQuery.AsEnumerable();
         }
 
         public void Delete(DeleteCategoriaLojaRequest request)
