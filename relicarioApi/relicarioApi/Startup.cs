@@ -14,6 +14,7 @@ using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Artistas;
 using relicarioApi.Repositories.Galeria.Categorias;
 using relicarioApi.Repositories.Galeria.Produtos;
+using relicarioApi.Repositories.Loja.Produtos;
 using relicarioApi.Services;
 using relicarioApi.Services.Correio;
 using System;
@@ -46,9 +47,14 @@ namespace relicarioApi
 
             services.AddTransient<ICategoriaGaleriaRepository, CategoriaGaleriaRepository>();
             services.AddTransient<IGaleriaProdutoRepository, GaleriaProdutoRepository>();
+            services.AddTransient<IProdutoGaleriaFotoRepository, ProdutoGaleriaFotoRepository>();
             services.AddTransient<IArtistaRepository, ArtistaRepository>();
-            services.AddTransient<IProdutoLojaRepository, ProdutoLojaRepository>();
+ 
             services.AddTransient<ICategoriaLojaRepository, CategoriaLojaRepository>();
+            services.AddTransient<IProdutoLojaRepository, ProdutoLojaRepository>();
+            services.AddTransient<IProdutoLojaAtributoRepository, ProdutoLojaAtributoRepository>();
+            services.AddTransient<IProdutoLojaRelacionadoRepository, ProdutoLojaRelacionadoRepository>();
+            services.AddTransient<IProdutoLojaFotoRepository, ProdutoLojaFotoRepository>();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 

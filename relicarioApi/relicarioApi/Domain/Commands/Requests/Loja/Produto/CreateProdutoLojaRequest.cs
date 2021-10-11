@@ -1,23 +1,19 @@
 ﻿using MediatR;
-using relicarioApi.Domain.Commands.Responses;
-using relicarioApi.Models;
+using relicarioApi.Domain.Commands.Responses.ProdutoLoja;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace relicarioApi.Domain.Commands.Requests
+namespace relicarioApi.Domain.Commands.Requests.ProdutoLoja
 {
     public class CreateProdutoLojaRequest : IRequest<CreateProdutoLojaResponse>
     {
-        [Required(ErrorMessage = "É necessário informar o código")]
+        [Required(ErrorMessage = "É necessário informar o código do produto")]
         public int Codigo { get; set; }
-        [Required(ErrorMessage = "É necessário informar o nome")]
+        [Required(ErrorMessage = "É necessário informar o nome do produto")]
         public string Nome { get; set; }
-        [Required(ErrorMessage = "É necessário informar uma descrição")]
         public string DescricaoCurta { get; set; }
         public string DescricaoLonga { get; set; }
         [Required(ErrorMessage = "É necessário informar o preço")]
-        [Range(1, 99999, ErrorMessage = "O preço deve ser maior que 0")]
         public decimal PrecoOriginal { get; set; }
         public decimal PrecoPromocional { get; set; }
         public int Estoque { get; set; }
@@ -25,6 +21,6 @@ namespace relicarioApi.Domain.Commands.Requests
         public decimal Comprimento { get; set; }
         public decimal Altura { get; set; }
         public decimal Largura { get; set; }
-        public Guid CategoriaId { get; set; }
+        public Guid CategoriaLojaId { get; set; }
     }
 }

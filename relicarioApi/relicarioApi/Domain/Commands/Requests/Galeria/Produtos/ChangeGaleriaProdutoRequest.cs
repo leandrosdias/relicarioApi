@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using relicarioApi.Domain.Commands.Requests.Galeria.ProdutoFoto;
 using relicarioApi.Domain.Commands.Responses.Galeria.Produtos;
-using relicarioApi.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +20,7 @@ namespace relicarioApi.Domain.Commands.Requests.Galeria.Produtos
         public Guid ArtistaId { get; set; }
         [Required(ErrorMessage = "É necessário informar a categoria para o produto")]
         public Guid CategoriaGaleriaId { get; set; }
-        public IEnumerable<ProdutoGaleriaFoto> Fotos { get; set; }
+        public IEnumerable<CreateProdutoGaleriaFotoRequest> Fotos { get; set; }
         public Guid ProdutoLojaId { get; set; }
     }
 }

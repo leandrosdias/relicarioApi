@@ -29,20 +29,20 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
         {
             try
             {
-                var GaleriaProduto = _mapper.Map<ProdutoGaleria>(request);
+                var galeriaProduto = _mapper.Map<ProdutoGaleria>(request);
 
-                if (_galeriaProdutoRepository.FindByCodigo(GaleriaProduto.Codigo)?.Id != request.Id)
+                if (_galeriaProdutoRepository.FindByCodigo(galeriaProduto.Codigo)?.Id != request.Id)
                 {
-                    return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"Já existe categoria cadastrado com o código: {GaleriaProduto.Codigo}"));
+                    return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"Já existe produto da galeria cadastrado com o código: {galeriaProduto.Codigo}"));
                 }
 
                 if (request.Codigo == 0)
                 {
-                    return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"O código da categoria não pode ser nulo"));
+                    return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"O código do prooduto da galeria não pode ser nulo"));
                 }
 
 
-                var result = _galeriaProdutoRepository.Update(GaleriaProduto);
+                var result = _galeriaProdutoRepository.Update(galeriaProduto);
                 _uow.Commit();
                 return Task.FromResult(_mapper.Map<ChangeGaleriaProdutoResponse>(result));
             }

@@ -29,13 +29,23 @@ namespace relicarioApi.Data
             modelBuilder.Entity<ProdutoGaleria>().Property(x => x.ProdutoLojaId).IsRequired(false);
             modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Nome).IsUnique();
             modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Codigo).IsUnique();
+
+            modelBuilder.Entity<ProdutoGaleriaFoto>().Property(x => x.Foto).HasColumnType("longblob");
+
+            modelBuilder.Entity<ProdutoLojaFoto>().Property(x => x.Foto).HasColumnType("longblob");
         }
 
         public DbSet<CategoriaLoja> LojaCategorias { get; set; }
         public DbSet<ProdutoLoja> LojaProdutos { get; set; }
+        public DbSet<ProdutoLojaFoto> LojaProdutosFoto { get; set; }
+        public DbSet<ProdutoLojaRelacionado> LojaProdutosRelacionados { get; set; }
+        public DbSet<ProdutoLojaAtributo> LojaProdutosAtributo { get; set; }
+
         public DbSet<CategoriaGaleria> GaleriaCategorias { get; set; }
         public DbSet<ProdutoGaleria> GaleriaProdutos { get; set; }
-        public DbSet<User> Usuarios { get; set; }
+        public DbSet<ProdutoGaleriaFoto> ProdutoGaleriaFotos { get; set; }
         public DbSet<Artista> Artistas { get; set; }
+
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using relicarioApi.Domain.Commands.Requests;
-using relicarioApi.Domain.Commands.Responses;
+using relicarioApi.Domain.Commands.Requests.ProdutoLoja;
+using relicarioApi.Domain.Commands.Responses.ProdutoLoja;
 using relicarioApi.Models;
 
 namespace relicarioApi.Profiles
@@ -10,7 +10,10 @@ namespace relicarioApi.Profiles
         public ProdutoLojaProfile()
         {
             CreateMap<CreateProdutoLojaRequest, ProdutoLoja>();
+            CreateMap<ChangeProdutoLojaRequest, ProdutoLoja>();
+
             CreateMap<ProdutoLoja, CreateProdutoLojaResponse>();
+            CreateMap<ProdutoLoja, ChangeProdutoLojaResponse>();
         }
     }
 }

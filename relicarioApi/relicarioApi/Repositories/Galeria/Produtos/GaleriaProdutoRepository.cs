@@ -39,7 +39,8 @@ namespace relicarioApi.Repositories.Galeria.Produtos
 
         public IEnumerable<ProdutoGaleria> Get(GetGaleriaProdutoRequest param)
         {
-            var queryProduto = _context.GaleriaProdutos.Include(x => x.Artista).Include(x => x.CategoriaGaleria).AsQueryable();
+            var queryProduto = _context.GaleriaProdutos
+                .Include(x => x.Artista).Include(x => x.CategoriaGaleria).Include(x => x.Fotos).AsQueryable();
 
             if (param.Id != Guid.Empty)
             {
@@ -109,6 +110,21 @@ namespace relicarioApi.Repositories.Galeria.Produtos
 
             if (!string.IsNullOrWhiteSpace(galeriaProduto.DescricaoLonga))
                 produtoDb.DescricaoLonga = galeriaProduto.DescricaoLonga;
+
+            foreach (var foto in galeriaProduto.Fotos)
+            {
+                var fotoDb = _context.ProdutoGaleriaFotos
+                    .FirstOrDefault(x => x.ProdutoGaleriaId == produtoDb.Id && x.Sequencia == foto.Sequencia);
+
+                if (fotoDb != null)
+                {
+                    fotoDb.Foto = foto.Foto;
+                }
+                else
+                {
+                    _context.ProdutoGaleriaFotos.Add(foto);
+                }
+            }
 
             return produtoDb;
         }

@@ -1,58 +1,54 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using relicarioApi.Domain.Commands.Requests;
-using relicarioApi.Domain.Commands.Responses;
-using relicarioApi.Domain.Handlers;
-using relicarioApi.Models;
-using System.Collections.Generic;
+using relicarioApi.Domain.Commands.Requests.ProdutoLoja;
+using relicarioApi.Domain.Commands.Responses.ProdutoLoja;
+using System;
 using System.Threading.Tasks;
 
 namespace relicarioApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("v1/[controller]")]
 
     public class ProdutoLojaController : ControllerBase
     {
-        // GET: ProdutoController
-        [HttpGet]
-        public IEnumerable<ProdutoLoja> RecuperarFilmes()
-        {
-            return new List<ProdutoLoja>
-            {
-                new ProdutoLoja{Nome ="Nome1"},
-                new ProdutoLoja{Nome ="Nome2"},
-            };
-        }
 
-        [HttpGet("{id}")]
-        // GET: ProdutoController/Details/5
-        public IActionResult Details(int id)
+        [HttpGet]
+        [Produces(typeof(GetProdutoLojaResponse))]
+        public async Task<IActionResult> Get([FromServices] IMediator handler,
+            [FromQuery] GetProdutoLojaRequest request)
         {
-            return Ok();
+            var result = await handler.Send(request);
+            return result.Sucess ? Ok(result) : NotFound(result);
         }
 
         [HttpPost]
-        // GET: ProdutoController/Create
-        public Task<CreateProdutoLojaResponse> Create([FromServices] IMediator handler,
+        [Produces(typeof(CreateProdutoLojaResponse))]
+        public async Task<IActionResult> Create([FromServices] IMediator handler,
             [FromBody] CreateProdutoLojaRequest request)
         {
-            return handler.Send(request);
+            var response = await handler.Send(request);
+            return response.Sucess ? CreatedAtAction(nameof(Get), response) : BadRequest(response);
         }
 
-        [HttpPut]
-        // GET: ProdutoController/Edit/5
-        public IActionResult Edit(int id)
+        [HttpPut("{id}")]
+        [Produces(typeof(ChangeProdutoLojaResponse))]
+        public async Task<IActionResult> Put(Guid id, [FromServices] IMediator handler,
+            [FromBody] ChangeProdutoLojaRequest request)
         {
-            return Ok();
+            request.Id = id;
+            var response = await handler.Send(request);
+            return response.Sucess ? NoContent() : NotFound(response);
         }
+
 
         [HttpDelete]
-        // GET: ProdutoController/Delete/5
-        public IActionResult Delete(int id)
+        [Produces(typeof(DeleteProdutoLojaResponse))]
+        public async Task<IActionResult> Delete([FromServices] IMediator handler,
+            [FromQuery] DeleteProdutoLojaRequest request)
         {
-            return Ok();
+            var response = await handler.Send(request);
+            return response.Sucess ? NoContent() : NotFound(response);
         }
-
     }
 }

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using relicarioApi.Data;
-using relicarioApi.Domain.Commands.Requests;
-using relicarioApi.Domain.Commands.Responses;
-using relicarioApi.Models;
+using relicarioApi.Domain.Commands.Requests.ProdutoLoja;
+using relicarioApi.Domain.Commands.Responses.ProdutoLoja;
 using relicarioApi.Repositories;
-using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using relicarioApi.Models;
+using System;
+using System.Diagnostics;
 
 namespace relicarioApi.Domain.Handlers
 {
@@ -29,7 +29,13 @@ namespace relicarioApi.Domain.Handlers
         {
             try
             {
-                var produtoLoja = _mapper.Map<ProdutoLoja>(request);
+                var produtoLoja = _mapper.Map<Models.ProdutoLoja>(request);
+
+                if (_produtoLojaRepository.FindByCodigo(produtoLoja.Codigo) != null)
+                {
+                    return Task.FromResult(new CreateProdutoLojaResponse(false, $"Já existe categoria cadastrada com o código: {produtoLoja.Codigo}"));
+                }
+
                 _produtoLojaRepository.Save(produtoLoja);
                 _uow.Commit();
                 return Task.FromResult(_mapper.Map<CreateProdutoLojaResponse>(produtoLoja));
@@ -37,7 +43,7 @@ namespace relicarioApi.Domain.Handlers
             catch (Exception e)
             {
                 _uow.Rollback();
-                Debug.WriteLine("CreateProdutoLoja: " + e.Message + " Stack: " + e.StackTrace);
+                Debug.WriteLine("CreateProdutoLojaHandler: " + e.Message + " Stack: " + e.StackTrace);
                 return Task.FromResult(new CreateProdutoLojaResponse(false, e.Message));
             }
         }

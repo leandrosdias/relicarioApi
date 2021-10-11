@@ -8,6 +8,6 @@ namespace relicarioApi.Models
     {
         public int Sequencia { get; set; }
         public byte[] Foto { get; set; }
-        public Guid ProdutoGategoriaId { get; set; }
+        public Guid ProdutoGaleriaId { get; set; }
     }
 }

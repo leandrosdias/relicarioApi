@@ -27,6 +27,5 @@ namespace relicarioApi.Domain.Commands.Responses.Galeria.Produtos
         public Guid CategoriaGaleriaId { get; set; }
         public IEnumerable<ProdutoGaleriaFoto> Fotos { get; set; }
         public Guid ProdutoLojaId { get; set; }
-        public ProdutoLoja ProdutoLoja { get; set; }
     }
 }

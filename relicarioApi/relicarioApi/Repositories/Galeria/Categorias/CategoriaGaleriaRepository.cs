@@ -9,7 +9,7 @@ namespace relicarioApi.Repositories.Galeria.Categorias
 {
     public class CategoriaGaleriaRepository : ICategoriaGaleriaRepository
     {
-        private DataContext _dataContext;
+        private readonly DataContext _dataContext;
 
         public CategoriaGaleriaRepository(DataContext datacontext)
         {

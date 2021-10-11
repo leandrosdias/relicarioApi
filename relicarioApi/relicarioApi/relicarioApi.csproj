@@ -30,4 +30,9 @@
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Commands\Responses\Galeria\ProdutoFoto\" />
+    <Folder Include="Domain\Handlers\Galeria\ProdutoFoto\" />
+  </ItemGroup>
+
 </Project>

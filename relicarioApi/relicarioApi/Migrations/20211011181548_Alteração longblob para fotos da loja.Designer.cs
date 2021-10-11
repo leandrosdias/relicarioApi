@@ -9,8 +9,8 @@ using relicarioApi.Data;
 namespace relicarioApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211010184150_Change galeria produto")]
-    partial class Changegaleriaproduto
+    [Migration("20211011181548_Alteração longblob para fotos da loja")]
+    partial class Alteraçãolongblobparafotosdaloja
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -207,7 +207,7 @@ namespace relicarioApi.Migrations
                         .HasColumnType("varbinary(16)");
 
                     b.Property<byte[]>("Foto")
-                        .HasColumnType("varbinary(4000)");
+                        .HasColumnType("longblob");
 
                     b.Property<DateTime>("Inserted")
                         .ValueGeneratedOnAdd()
@@ -218,9 +218,6 @@ namespace relicarioApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<byte[]>("ProdutoGaleriaId")
-                        .HasColumnType("varbinary(16)");
-
-                    b.Property<byte[]>("ProdutoGategoriaId")
                         .IsRequired()
                         .HasColumnType("varbinary(16)");
 
@@ -330,7 +327,7 @@ namespace relicarioApi.Migrations
                         .HasColumnType("varbinary(16)");
 
                     b.Property<byte[]>("Foto")
-                        .HasColumnType("varbinary(4000)");
+                        .HasColumnType("longblob");
 
                     b.Property<DateTime>("Inserted")
                         .ValueGeneratedOnAdd()
@@ -489,13 +486,13 @@ namespace relicarioApi.Migrations
             modelBuilder.Entity("relicarioApi.Models.ProdutoGaleria", b =>
                 {
                     b.HasOne("relicarioApi.Models.Artista", "Artista")
-                        .WithMany()
+                        .WithMany("Produtos")
                         .HasForeignKey("ArtistaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("relicarioApi.Models.CategoriaGaleria", "CategoriaGaleria")
-                        .WithMany()
+                        .WithMany("Produtos")
                         .HasForeignKey("CategoriaGaleriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -509,7 +506,9 @@ namespace relicarioApi.Migrations
                 {
                     b.HasOne("relicarioApi.Models.ProdutoGaleria", null)
                         .WithMany("Fotos")
-                        .HasForeignKey("ProdutoGaleriaId");
+                        .HasForeignKey("ProdutoGaleriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoLoja", b =>
@@ -567,6 +566,16 @@ namespace relicarioApi.Migrations
                     b.HasOne("relicarioApi.Models.User", null)
                         .WithMany("Enderecos")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("relicarioApi.Models.Artista", b =>
+                {
+                    b.Navigation("Produtos");
+                });
+
+            modelBuilder.Entity("relicarioApi.Models.CategoriaGaleria", b =>
+                {
+                    b.Navigation("Produtos");
                 });
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoGaleria", b =>
