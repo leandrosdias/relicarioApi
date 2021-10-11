@@ -9,8 +9,8 @@ using relicarioApi.Data;
 namespace relicarioApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211005215058_Categorias contraint codigo")]
-    partial class Categoriascontraintcodigo
+    [Migration("20211010184150_Change galeria produto")]
+    partial class Changegaleriaproduto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,9 +40,12 @@ namespace relicarioApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(767)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("Artistas");
                 });
@@ -177,13 +180,22 @@ namespace relicarioApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<byte[]>("ProdutoLojaId")
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistaId");
 
                     b.HasIndex("CategoriaGaleriaId");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("GALERIA_PRODUTO");
                 });

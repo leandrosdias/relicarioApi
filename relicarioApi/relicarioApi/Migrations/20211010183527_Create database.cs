@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace relicarioApi.Migrations
 {
-    public partial class criacaodatabase : Migration
+    public partial class Createdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace relicarioApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Nome = table.Column<string>(type: "varchar(767)", nullable: true),
                     DescricaoLonga = table.Column<string>(type: "text", nullable: true),
                     DescricaoCurta = table.Column<string>(type: "text", nullable: true),
                     Inserted = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -83,39 +83,6 @@ namespace relicarioApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_USUARIO", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GALERIA_PRODUTO",
-                columns: table => new
-                {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Codigo = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "text", nullable: true),
-                    DescricaoCurta = table.Column<string>(type: "text", nullable: true),
-                    DescricaoLonga = table.Column<string>(type: "text", nullable: true),
-                    ArtistaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    CategoriaGaleriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Inserted = table.Column<DateTime>(type: "datetime", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.ComputedColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GALERIA_PRODUTO", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GALERIA_PRODUTO_Artistas_ArtistaId",
-                        column: x => x.ArtistaId,
-                        principalTable: "Artistas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GALERIA_PRODUTO_GALERIA_CATEGORIA_CategoriaGaleriaId",
-                        column: x => x.CategoriaGaleriaId,
-                        principalTable: "GALERIA_CATEGORIA",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,14 +176,17 @@ namespace relicarioApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GALERIA_PRODUTO_FOTO",
+                name: "GALERIA_PRODUTO",
                 columns: table => new
                 {
                     Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Sequencia = table.Column<int>(type: "int", nullable: false),
-                    Foto = table.Column<byte[]>(type: "varbinary(4000)", nullable: true),
-                    ProdutoGategoriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    ProdutoGaleriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(767)", nullable: true),
+                    DescricaoCurta = table.Column<string>(type: "text", nullable: true),
+                    DescricaoLonga = table.Column<string>(type: "text", nullable: true),
+                    ArtistaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    CategoriaGaleriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    ProdutoLojaId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
                     Inserted = table.Column<DateTime>(type: "datetime", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     LastUpdated = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -224,11 +194,23 @@ namespace relicarioApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GALERIA_PRODUTO_FOTO", x => x.Id);
+                    table.PrimaryKey("PK_GALERIA_PRODUTO", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GALERIA_PRODUTO_FOTO_GALERIA_PRODUTO_ProdutoGaleriaId",
-                        column: x => x.ProdutoGaleriaId,
-                        principalTable: "GALERIA_PRODUTO",
+                        name: "FK_GALERIA_PRODUTO_Artistas_ArtistaId",
+                        column: x => x.ArtistaId,
+                        principalTable: "Artistas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GALERIA_PRODUTO_GALERIA_CATEGORIA_CategoriaGaleriaId",
+                        column: x => x.CategoriaGaleriaId,
+                        principalTable: "GALERIA_CATEGORIA",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GALERIA_PRODUTO_LOJA_PRODUTO_ProdutoLojaId",
+                        column: x => x.ProdutoLojaId,
+                        principalTable: "LOJA_PRODUTO",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -310,10 +292,47 @@ namespace relicarioApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GALERIA_PRODUTO_FOTO",
+                columns: table => new
+                {
+                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Sequencia = table.Column<int>(type: "int", nullable: false),
+                    Foto = table.Column<byte[]>(type: "varbinary(4000)", nullable: true),
+                    ProdutoGategoriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    ProdutoGaleriaId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
+                    Inserted = table.Column<DateTime>(type: "datetime", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.ComputedColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GALERIA_PRODUTO_FOTO", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GALERIA_PRODUTO_FOTO_GALERIA_PRODUTO_ProdutoGaleriaId",
+                        column: x => x.ProdutoGaleriaId,
+                        principalTable: "GALERIA_PRODUTO",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Artistas_Nome",
+                table: "Artistas",
+                column: "Nome",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_CreditCard_UserId",
                 table: "CreditCard",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GALERIA_CATEGORIA_Codigo",
+                table: "GALERIA_CATEGORIA",
+                column: "Codigo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_GALERIA_PRODUTO_ArtistaId",
@@ -326,9 +345,32 @@ namespace relicarioApi.Migrations
                 column: "CategoriaGaleriaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GALERIA_PRODUTO_Codigo",
+                table: "GALERIA_PRODUTO",
+                column: "Codigo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GALERIA_PRODUTO_Nome",
+                table: "GALERIA_PRODUTO",
+                column: "Nome",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GALERIA_PRODUTO_ProdutoLojaId",
+                table: "GALERIA_PRODUTO",
+                column: "ProdutoLojaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GALERIA_PRODUTO_FOTO_ProdutoGaleriaId",
                 table: "GALERIA_PRODUTO_FOTO",
                 column: "ProdutoGaleriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LOJA_CATEGORIA_Codigo",
+                table: "LOJA_CATEGORIA",
+                column: "Codigo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_LOJA_PRODUTO_CategoriaLojaId",
@@ -385,9 +427,6 @@ namespace relicarioApi.Migrations
                 name: "GALERIA_PRODUTO");
 
             migrationBuilder.DropTable(
-                name: "LOJA_PRODUTO");
-
-            migrationBuilder.DropTable(
                 name: "USUARIO");
 
             migrationBuilder.DropTable(
@@ -395,6 +434,9 @@ namespace relicarioApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "GALERIA_CATEGORIA");
+
+            migrationBuilder.DropTable(
+                name: "LOJA_PRODUTO");
 
             migrationBuilder.DropTable(
                 name: "LOJA_CATEGORIA");

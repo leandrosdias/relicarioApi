@@ -178,13 +178,22 @@ namespace relicarioApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<byte[]>("ProdutoLojaId")
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistaId");
 
                     b.HasIndex("CategoriaGaleriaId");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("GALERIA_PRODUTO");
                 });

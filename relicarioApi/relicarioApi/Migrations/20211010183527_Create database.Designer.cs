@@ -9,8 +9,8 @@ using relicarioApi.Data;
 namespace relicarioApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211008042148_Create Artista Index")]
-    partial class CreateArtistaIndex
+    [Migration("20211010183527_Create database")]
+    partial class Createdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,13 +180,24 @@ namespace relicarioApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<byte[]>("ProdutoLojaId")
+                        .HasColumnType("varbinary(16)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistaId");
 
                     b.HasIndex("CategoriaGaleriaId");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
+
+                    b.HasIndex("ProdutoLojaId");
 
                     b.ToTable("GALERIA_PRODUTO");
                 });
@@ -491,9 +502,15 @@ namespace relicarioApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("relicarioApi.Models.ProdutoLoja", "ProdutoLoja")
+                        .WithMany()
+                        .HasForeignKey("ProdutoLojaId");
+
                     b.Navigation("Artista");
 
                     b.Navigation("CategoriaGaleria");
+
+                    b.Navigation("ProdutoLoja");
                 });
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoGaleriaFoto", b =>

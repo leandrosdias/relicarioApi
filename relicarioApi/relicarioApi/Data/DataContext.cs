@@ -7,7 +7,6 @@ namespace relicarioApi.Data
     {
         public DataContext(DbContextOptions<DataContext> opt) : base(opt)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +23,12 @@ namespace relicarioApi.Data
             modelBuilder.Entity<ProdutoLojaRelacionado>().HasOne(relacionado => relacionado.ProdutoRelacionado);
 
             modelBuilder.Entity<Artista>().HasIndex(art => art.Nome).IsUnique();
+
+            modelBuilder.Entity<ProdutoGaleria>().HasOne(x => x.Artista).WithMany(x => x.Produtos).HasForeignKey(x => x.ArtistaId);
+            modelBuilder.Entity<ProdutoGaleria>().HasOne(x => x.CategoriaGaleria).WithMany(x => x.Produtos).HasForeignKey(x => x.CategoriaGaleriaId);
+            modelBuilder.Entity<ProdutoGaleria>().Property(x => x.ProdutoLojaId).IsRequired(false);
+            modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Nome).IsUnique();
+            modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Codigo).IsUnique();
         }
 
         public DbSet<CategoriaLoja> LojaCategorias { get; set; }

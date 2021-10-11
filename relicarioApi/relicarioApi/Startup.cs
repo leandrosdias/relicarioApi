@@ -13,6 +13,7 @@ using relicarioApi.Data;
 using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Artistas;
 using relicarioApi.Repositories.Galeria.Categorias;
+using relicarioApi.Repositories.Galeria.Produtos;
 using relicarioApi.Services;
 using relicarioApi.Services.Correio;
 using System;
@@ -35,7 +36,7 @@ namespace relicarioApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opts => opts.UseMySQL(Configuration.GetConnectionString("DbConnection")));
+            services.AddDbContext<DataContext>(opts => opts.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("DbConnection")));
 
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -44,6 +45,7 @@ namespace relicarioApi
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<ICategoriaGaleriaRepository, CategoriaGaleriaRepository>();
+            services.AddTransient<IGaleriaProdutoRepository, GaleriaProdutoRepository>();
             services.AddTransient<IArtistaRepository, ArtistaRepository>();
             services.AddTransient<IProdutoLojaRepository, ProdutoLojaRepository>();
             services.AddTransient<ICategoriaLojaRepository, CategoriaLojaRepository>();
