@@ -46,6 +46,6 @@ namespace relicarioApi.Data
         public DbSet<ProdutoGaleriaFoto> ProdutoGaleriaFotos { get; set; }
         public DbSet<Artista> Artistas { get; set; }
 
-
+        public DbSet<Valores> Valores { get; set; }
     }
 }
