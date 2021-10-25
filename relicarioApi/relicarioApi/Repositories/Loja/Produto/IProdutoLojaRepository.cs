@@ -10,7 +10,7 @@ namespace relicarioApi.Repositories
         public void Save(ProdutoLoja produto);
         public ProdutoLoja Get(Guid id);
         IEnumerable<ProdutoLoja> Get(GetProdutoLojaRequest param);
-        ProdutoLoja FindByCodigo(int codigo);
+        ProdutoLoja FindByCodigo(string codigo);
         ProdutoLoja Update(ProdutoLoja produto);
         void Delete(DeleteProdutoLojaRequest request);
         ProdutoLoja FindByNome(string nome);

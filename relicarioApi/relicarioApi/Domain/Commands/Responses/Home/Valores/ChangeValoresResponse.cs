@@ -16,8 +16,8 @@ namespace relicarioApi.Domain.Commands.Responses.Home.Valores
 
         }
 
-        public string Nome { get; set; }
-        public string DescricaoLonga { get; set; }
-        public string DescricaoCurta { get; set; }
+        public string Titulo { get; set; }
+        public string Descricao { get; set; }
+        public string Icone { get; set; }
     }
 }

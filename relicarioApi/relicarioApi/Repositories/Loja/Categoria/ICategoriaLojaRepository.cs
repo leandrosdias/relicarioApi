@@ -12,6 +12,6 @@ namespace relicarioApi.Repositories
         IEnumerable<CategoriaLoja> Get(GetCategoriaLojaRequest param);
         void Delete(DeleteCategoriaLojaRequest request);
         CategoriaLoja Update(CategoriaLoja categoriaLoja);
-        CategoriaLoja FindByCodigo(int codigo);
+        CategoriaLoja FindByCodigo(string codigo);
     }
 }

@@ -33,6 +33,8 @@ namespace relicarioApi.Data
             modelBuilder.Entity<ProdutoGaleriaFoto>().Property(x => x.Foto).HasColumnType("longblob");
 
             modelBuilder.Entity<ProdutoLojaFoto>().Property(x => x.Foto).HasColumnType("longblob");
+
+            modelBuilder.Entity<Parameters>().HasIndex(x => x.Param).IsUnique();
         }
 
         public DbSet<CategoriaLoja> LojaCategorias { get; set; }
@@ -47,5 +49,7 @@ namespace relicarioApi.Data
         public DbSet<Artista> Artistas { get; set; }
 
         public DbSet<Valores> Valores { get; set; }
+        public DbSet<Numeros> Numeros { get; set; }
+        public DbSet<Parameters> Parameters { get; set; }
     }
 }

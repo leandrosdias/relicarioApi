@@ -25,7 +25,7 @@ namespace relicarioApi.Repositories.Galeria.Categorias
             }
         }
 
-        public CategoriaGaleria FindByCodigo(int codigo)
+        public CategoriaGaleria FindByCodigo(string codigo)
         {
             return _dataContext.GaleriaCategorias.FirstOrDefault(x => x.Codigo == codigo);
         }

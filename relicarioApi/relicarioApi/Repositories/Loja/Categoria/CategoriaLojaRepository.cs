@@ -83,7 +83,7 @@ namespace relicarioApi.Repositories
             return categoriaDb;
         }
 
-        public CategoriaLoja FindByCodigo(int codigo)
+        public CategoriaLoja FindByCodigo(string codigo)
         {
             return _context.LojaCategorias.FirstOrDefault(x => x.Codigo == codigo);
         }

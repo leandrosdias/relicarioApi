@@ -27,7 +27,7 @@ namespace relicarioApi.Repositories.Galeria.Produtos
             }
         }
 
-        public ProdutoGaleria FindByCodigo(int codigo)
+        public ProdutoGaleria FindByCodigo(string codigo)
         {
             return _context.GaleriaProdutos.FirstOrDefault(x => x.Codigo == codigo);
         }
@@ -99,7 +99,7 @@ namespace relicarioApi.Repositories.Galeria.Produtos
             if (galeriaProduto.ProdutoLojaId != Guid.Empty)
                 produtoDb.ProdutoLojaId = galeriaProduto.ProdutoLojaId;
 
-            if (galeriaProduto.Codigo != 0)
+            if (!string.IsNullOrWhiteSpace(galeriaProduto.Codigo))
                 produtoDb.Codigo = galeriaProduto.Codigo;
 
             if (!string.IsNullOrWhiteSpace(galeriaProduto.Nome))

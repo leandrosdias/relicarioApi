@@ -9,7 +9,7 @@ namespace relicarioApi.Domain.Commands.Requests.Galeria.Categorias
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public List<int> Codigos { get; set; }
+        public List<string> Codigos { get; set; }
         public int CodigoPai { get; set; }
     }
 }

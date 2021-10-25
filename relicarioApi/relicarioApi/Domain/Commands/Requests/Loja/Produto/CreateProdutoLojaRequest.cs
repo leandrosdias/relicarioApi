@@ -8,7 +8,7 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLoja
     public class CreateProdutoLojaRequest : IRequest<CreateProdutoLojaResponse>
     {
         [Required(ErrorMessage = "É necessário informar o código do produto")]
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         [Required(ErrorMessage = "É necessário informar o nome do produto")]
         public string Nome { get; set; }
         public string DescricaoCurta { get; set; }

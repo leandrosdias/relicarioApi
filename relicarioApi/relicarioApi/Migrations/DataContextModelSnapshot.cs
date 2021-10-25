@@ -57,8 +57,8 @@ namespace relicarioApi.Migrations
                     b.Property<int>("CategoriaPai")
                         .HasColumnType("int");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<string>("Codigo")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<DateTime>("Inserted")
                         .ValueGeneratedOnAdd()
@@ -88,8 +88,8 @@ namespace relicarioApi.Migrations
                     b.Property<bool>("BarraSuperior")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<string>("Codigo")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<int>("CodigoPai")
                         .HasColumnType("int");
@@ -113,6 +113,59 @@ namespace relicarioApi.Migrations
                     b.ToTable("LOJA_CATEGORIA");
                 });
 
+            modelBuilder.Entity("relicarioApi.Models.Numeros", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Inserted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Numeros");
+                });
+
+            modelBuilder.Entity("relicarioApi.Models.Parameters", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<DateTime>("Inserted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Param")
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Param")
+                        .IsUnique();
+
+                    b.ToTable("Parameters");
+                });
+
             modelBuilder.Entity("relicarioApi.Models.ProdutoGaleria", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -127,8 +180,8 @@ namespace relicarioApi.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(16)");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<string>("Codigo")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("DescricaoCurta")
                         .HasColumnType("text");
@@ -209,8 +262,8 @@ namespace relicarioApi.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(16)");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<string>("Codigo")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Comprimento")
                         .HasColumnType("decimal(18, 2)");

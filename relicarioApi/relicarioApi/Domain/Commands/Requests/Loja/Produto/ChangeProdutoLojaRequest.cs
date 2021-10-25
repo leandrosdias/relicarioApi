@@ -9,7 +9,7 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLoja
     {
         public Guid Id { get; set; }
         [Required(ErrorMessage = "É necessário informar o código da categoria")]
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         [Required(ErrorMessage = "É necessário informar o nome da categoria")]
         public string Nome { get; set; }
         public string DescricaoCurta { get; set; }

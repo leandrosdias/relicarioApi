@@ -11,6 +11,6 @@ namespace relicarioApi.Repositories.Galeria.Categorias
         void Delete(DeleteCategoriaGaleriaRequest request);
         CategoriaGaleria Update(CategoriaGaleria categoria);
         CategoriaGaleria FindByNome(string nome);
-        CategoriaGaleria FindByCodigo(int codigo);
+        CategoriaGaleria FindByCodigo(string codigo);
     }
 }

@@ -6,7 +6,7 @@ namespace relicarioApi.Repositories.Galeria.Produtos
 {
     public interface IGaleriaProdutoRepository
     {
-        ProdutoGaleria FindByCodigo(int codigo);
+        ProdutoGaleria FindByCodigo(string codigo);
         ProdutoGaleria Update(ProdutoGaleria galeriaProduto);
         void Save(ProdutoGaleria produto);
         IEnumerable<ProdutoGaleria> Get(GetGaleriaProdutoRequest param);

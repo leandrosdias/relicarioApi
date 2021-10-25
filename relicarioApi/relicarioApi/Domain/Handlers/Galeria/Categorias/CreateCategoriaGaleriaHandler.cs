@@ -40,7 +40,7 @@ namespace relicarioApi.Domain.Handlers.Galeria.Categorias
                     return Task.FromResult(new CreateCategoriaGaleriaResponse(false, $"Já existe categoria cadastrado com o código: {categoriaGaleria.Codigo}"));
                 }
 
-                if (request.Codigo == 0)
+                if (string.IsNullOrWhiteSpace(request.Codigo))
                 {
                     return Task.FromResult(new CreateCategoriaGaleriaResponse(false, $"O código da categoria não pode ser nulo"));
                 }

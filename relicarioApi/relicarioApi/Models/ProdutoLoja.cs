@@ -7,7 +7,7 @@ namespace relicarioApi.Models
     [Table("LOJA_PRODUTO")]
     public class ProdutoLoja : ModelBase
     {
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public string Nome { get; set; }
         public string DescricaoCurta { get; set; }
         public string DescricaoLonga { get; set; }

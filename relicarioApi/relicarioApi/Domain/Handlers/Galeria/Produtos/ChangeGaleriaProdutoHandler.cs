@@ -36,7 +36,7 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
                     return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"Já existe produto da galeria cadastrado com o código: {galeriaProduto.Codigo}"));
                 }
 
-                if (request.Codigo == 0)
+                if (string.IsNullOrWhiteSpace(request.Codigo))
                 {
                     return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"O código do prooduto da galeria não pode ser nulo"));
                 }

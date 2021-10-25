@@ -25,7 +25,7 @@ namespace relicarioApi.Repositories
             }
         }
 
-        public ProdutoLoja FindByCodigo(int codigo)
+        public ProdutoLoja FindByCodigo(string codigo)
         {
             return _context.LojaProdutos.FirstOrDefault(x => x.Codigo == codigo);
         }
@@ -101,7 +101,7 @@ namespace relicarioApi.Repositories
             if (produto.Estoque != 0)
                 produtoDb.Estoque = produto.Estoque;
 
-            if (produto.Codigo != 0)
+            if (!string.IsNullOrWhiteSpace(produto.Codigo))
                 produtoDb.Codigo = produto.Codigo;
 
             if (!string.IsNullOrWhiteSpace(produto.Peso))
