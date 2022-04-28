@@ -42,7 +42,12 @@ namespace relicarioApi.Repositories.System.Parameter
                 return parametersQuery.Where(x => x.Param == param.Param);
             }
 
-            return parametersQuery.AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(param.Categoria))
+            {
+                parametersQuery = parametersQuery.Where(x => x.Categoria == param.Categoria);
+            }
+
+            return parametersQuery.OrderBy(x => x.Param).AsEnumerable();
         }
 
         public Parameters GetByParam(string param)
@@ -60,13 +65,14 @@ namespace relicarioApi.Repositories.System.Parameter
             var ParametersDb = _context.Parameters.FirstOrDefault(x => x.Id == parameters.Id);
             if (ParametersDb == null)
             {
-#pragma warning disable S112 // General exceptions should never be thrown
-                throw new Exception(message: $"Parameters não encotrado para atualizar: {ParametersDb?.Id}");
-#pragma warning restore S112 // General exceptions should never be thrown
+                Save(parameters);
+                return parameters;
             }
 
             ParametersDb.Param = parameters.Param;
             ParametersDb.Value = parameters.Value;
+            ParametersDb.Content = parameters.Content;
+            ParametersDb.Categoria = parameters.Categoria;
 
             return ParametersDb;
         }

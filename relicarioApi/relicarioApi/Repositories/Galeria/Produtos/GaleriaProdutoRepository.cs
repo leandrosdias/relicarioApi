@@ -97,7 +97,14 @@ namespace relicarioApi.Repositories.Galeria.Produtos
                 produtoDb.CategoriaGaleriaId = galeriaProduto.CategoriaGaleriaId;
 
             if (galeriaProduto.ProdutoLojaId != Guid.Empty)
+            {
                 produtoDb.ProdutoLojaId = galeriaProduto.ProdutoLojaId;
+                produtoDb.ProdutoLojaNome = galeriaProduto.ProdutoLojaNome;
+            }
+            else
+            {
+                produtoDb.ProdutoLojaNome = string.Empty;
+            }
 
             if (!string.IsNullOrWhiteSpace(galeriaProduto.Codigo))
                 produtoDb.Codigo = galeriaProduto.Codigo;

@@ -21,7 +21,7 @@ namespace relicarioApi.Controllers
 
         [HttpPost]
         public async Task<string> CalcularFreteAsync(string cepOrigem, string cepDestino, string codServico, decimal altura,
-            decimal comprimento, decimal largura, string peso)
+            decimal comprimento, decimal largura, decimal peso)
         {
             var produto = new ProdutoLoja
             {

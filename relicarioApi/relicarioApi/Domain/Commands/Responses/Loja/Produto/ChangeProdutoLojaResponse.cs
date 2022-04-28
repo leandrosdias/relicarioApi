@@ -24,6 +24,7 @@ namespace relicarioApi.Domain.Commands.Responses.ProdutoLoja
         public decimal Comprimento { get; set; }
         public decimal Altura { get; set; }
         public decimal Largura { get; set; }
+        public bool Status { get; set; }
         public Guid CategoriaLojaId { get; set; }
 
     }

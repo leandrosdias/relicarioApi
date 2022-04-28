@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace relicarioApi.Domain.Commands.Responses.ProdutoLoja
@@ -15,11 +17,19 @@ namespace relicarioApi.Domain.Commands.Responses.ProdutoLoja
 
         }
 
-        public GetProdutoLojaResponse(IEnumerable<Models.ProdutoLoja> produtos)
+        public GetProdutoLojaResponse(IEnumerable<Models.ProdutoLoja> produtos, bool getNames)
         {
-            Produtos = produtos;
+            if (!getNames)
+            {
+                Produtos = produtos;
+            }
+            else
+            {
+                ProdutoNames = produtos.Select(x => new { Id = x.Id, Name = x.Codigo + " - " + x.Nome });
+            };
         }
-        
+
         public IEnumerable<Models.ProdutoLoja> Produtos { get; set; }
+        public IEnumerable<object> ProdutoNames { get; set; }
     }
 }

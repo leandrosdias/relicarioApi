@@ -18,10 +18,11 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLoja
         public decimal PrecoOriginal { get; set; }
         public decimal PrecoPromocional { get; set; }
         public int Estoque { get; set; }
-        public string Peso { get; set; }
+        public decimal Peso { get; set; }
         public decimal Comprimento { get; set; }
         public decimal Altura { get; set; }
         public decimal Largura { get; set; }
+        public bool Status { get; set; }
         public Guid CategoriaLojaId { get; set; }
 
     }

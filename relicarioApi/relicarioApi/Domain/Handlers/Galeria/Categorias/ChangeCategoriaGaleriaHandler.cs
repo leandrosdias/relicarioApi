@@ -30,13 +30,15 @@ namespace relicarioApi.Domain.Handlers.Galeria.Categorias
             try
             {
                 var categoriaGaleria = _mapper.Map<CategoriaGaleria>(request);
+                var cat = _categoriaGaleriaRepository.FindByNome(categoriaGaleria.Nome);
 
-                if (_categoriaGaleriaRepository.FindByNome(categoriaGaleria.Nome)?.Id != request.Id)
+                if (cat != null && cat.Id != request.Id)
                 {
                     return Task.FromResult(new ChangeCategoriaGaleriaResponse(false, $"Já existe categoria cadastrado com o nome: {categoriaGaleria.Nome}"));
                 }
 
-                if (_categoriaGaleriaRepository.FindByCodigo(categoriaGaleria.Codigo)?.Id != request.Id)
+                cat = _categoriaGaleriaRepository.FindByCodigo(categoriaGaleria.Codigo);
+                if (cat != null && cat.Id != request.Id)
                 {
                     return Task.FromResult(new ChangeCategoriaGaleriaResponse(false, $"Já existe categoria cadastrado com o código: {categoriaGaleria.Codigo}"));
                 }

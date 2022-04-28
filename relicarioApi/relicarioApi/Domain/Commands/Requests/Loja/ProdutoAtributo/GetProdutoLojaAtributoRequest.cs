@@ -10,5 +10,6 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLojaAtributo
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public Guid ProdutoLojaId { get; set; }
+        public bool SelectDistinct { get; set; }
     }
 }

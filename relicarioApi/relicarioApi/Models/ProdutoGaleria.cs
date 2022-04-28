@@ -17,5 +17,6 @@ namespace relicarioApi.Models
         public Guid CategoriaGaleriaId { get; set; }
         public virtual IEnumerable<ProdutoGaleriaFoto> Fotos { get; set; }
         public Nullable<Guid> ProdutoLojaId { get; set; }
+        public string ProdutoLojaNome { get; set; }
     }
 }

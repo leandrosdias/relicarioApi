@@ -4,6 +4,7 @@ using relicarioApi.Data;
 using relicarioApi.Domain.Commands.Requests.Galeria.Produtos;
 using relicarioApi.Domain.Commands.Responses.Galeria.Produtos;
 using relicarioApi.Models;
+using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Produtos;
 using System;
 using System.Diagnostics;
@@ -15,11 +16,13 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
     public class ChangeGaleriaProdutoHandler : IRequestHandler<ChangeGaleriaProdutoRequest, ChangeGaleriaProdutoResponse>
     {
         private readonly IGaleriaProdutoRepository _galeriaProdutoRepository;
+        private readonly IProdutoLojaRepository _produtoLojaRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public ChangeGaleriaProdutoHandler(IGaleriaProdutoRepository galeriaProdutoRepository, IMapper mapper, IUnitOfWork uow)
+        public ChangeGaleriaProdutoHandler(IProdutoLojaRepository produtoLojaRepository, IGaleriaProdutoRepository galeriaProdutoRepository, IMapper mapper, IUnitOfWork uow)
         {
+            _produtoLojaRepository = produtoLojaRepository;
             _galeriaProdutoRepository = galeriaProdutoRepository;
             _mapper = mapper;
             _uow = uow;
@@ -29,9 +32,19 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
         {
             try
             {
+                if (request.ProdutoLojaId != Guid.Empty)
+                {
+                    var prodLoja = _produtoLojaRepository.Get(request.ProdutoLojaId);
+                    if (prodLoja != null)
+                    {
+                        request.ProdutoLojaNome = prodLoja.Nome;
+                    }
+                }
+
                 var galeriaProduto = _mapper.Map<ProdutoGaleria>(request);
 
-                if (_galeriaProdutoRepository.FindByCodigo(galeriaProduto.Codigo)?.Id != request.Id)
+                var prod = _galeriaProdutoRepository.FindByCodigo(galeriaProduto.Codigo);
+                if (prod != null && prod.Id != request.Id)
                 {
                     return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"Já existe produto da galeria cadastrado com o código: {galeriaProduto.Codigo}"));
                 }
@@ -40,7 +53,6 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
                 {
                     return Task.FromResult(new ChangeGaleriaProdutoResponse(false, $"O código do prooduto da galeria não pode ser nulo"));
                 }
-
 
                 var result = _galeriaProdutoRepository.Update(galeriaProduto);
                 _uow.Commit();

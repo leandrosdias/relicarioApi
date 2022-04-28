@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using relicarioApi.Data;
 using relicarioApi.Domain.Commands.Requests.ProdutoLoja;
 using relicarioApi.Models;
@@ -46,7 +47,7 @@ namespace relicarioApi.Repositories
                 .Include(x => x.CategoriaLoja)
                 .Include(x => x.ProdutoLojaAtributos)
                 .Include(x => x.ProdutosRelacionados)
-                .Include(x => x.Fotos).AsQueryable();
+                .Include(x => x.FotosProduto).AsQueryable();
 
             if (param.Id != Guid.Empty)
             {
@@ -104,7 +105,7 @@ namespace relicarioApi.Repositories
             if (!string.IsNullOrWhiteSpace(produto.Codigo))
                 produtoDb.Codigo = produto.Codigo;
 
-            if (!string.IsNullOrWhiteSpace(produto.Peso))
+            if (produto.Peso != 0)
                 produtoDb.Peso = produto.Peso;
 
             if (!string.IsNullOrWhiteSpace(produto.Nome))
@@ -131,7 +132,10 @@ namespace relicarioApi.Repositories
 
         private void SaveFotos(ProdutoLoja produto, ProdutoLoja produtoDb)
         {
-            foreach (var foto in produto.Fotos)
+            if (produto.FotosProduto == null)
+                return;
+
+            foreach (var foto in produto.FotosProduto)
             {
                 var fotoDb = _context.LojaProdutosFoto
                     .FirstOrDefault(x => x.ProdutoLojaId == produtoDb.Id && x.Sequencia == foto.Sequencia);
@@ -149,6 +153,9 @@ namespace relicarioApi.Repositories
 
         private void SaveRelacionados(ProdutoLoja produto)
         {
+            if (produto.ProdutosRelacionados == null)
+                return;
+
             foreach (var produtoRelacionado in produto.ProdutosRelacionados)
             {
                 var releacionadosDb = _context.LojaProdutosRelacionados
@@ -164,6 +171,9 @@ namespace relicarioApi.Repositories
 
         private void SaveAtributos(ProdutoLoja produto)
         {
+            if (produto.ProdutoLojaAtributos == null)
+                return;
+
             foreach (var atributo in produto.ProdutoLojaAtributos)
             {
                 var atributosDb = _context.LojaProdutosAtributo.Where(x => x.ProdutoLojaId == produto.Id);
@@ -178,6 +188,11 @@ namespace relicarioApi.Repositories
                     atributoDb.Valor = atributo.Valor;
                 }
             }
+        }
+
+        public IEnumerable<object> GetProdutoSelect()
+        {
+            return _context.LojaProdutos.Select(x => new { Codigo = x.Codigo, Nome = x.SelectDisplay });
         }
     }
 }

@@ -30,11 +30,14 @@ namespace relicarioApi.Data
             modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Nome).IsUnique();
             modelBuilder.Entity<ProdutoGaleria>().HasIndex(x => x.Codigo).IsUnique();
 
-            modelBuilder.Entity<ProdutoGaleriaFoto>().Property(x => x.Foto).HasColumnType("longblob");
+            modelBuilder.Entity<Artista>().Property(x => x.Foto).HasColumnType("longblob");
 
+            modelBuilder.Entity<ProdutoGaleriaFoto>().Property(x => x.Foto).HasColumnType("longblob");
             modelBuilder.Entity<ProdutoLojaFoto>().Property(x => x.Foto).HasColumnType("longblob");
+            modelBuilder.Entity<Depoimento>().Property(x => x.Foto).HasColumnType("longblob");
 
             modelBuilder.Entity<Parameters>().HasIndex(x => x.Param).IsUnique();
+            modelBuilder.Entity<Parameters>().Property(x => x.Content).HasColumnType("longblob");
         }
 
         public DbSet<CategoriaLoja> LojaCategorias { get; set; }
@@ -51,5 +54,6 @@ namespace relicarioApi.Data
         public DbSet<Valores> Valores { get; set; }
         public DbSet<Numeros> Numeros { get; set; }
         public DbSet<Parameters> Parameters { get; set; }
+        public DbSet<Depoimento> Depoimentos { get; set; }
     }
 }

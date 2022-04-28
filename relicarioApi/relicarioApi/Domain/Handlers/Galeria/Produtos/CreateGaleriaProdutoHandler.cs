@@ -4,6 +4,7 @@ using relicarioApi.Data;
 using relicarioApi.Domain.Commands.Requests.Galeria.Produtos;
 using relicarioApi.Domain.Commands.Responses.Galeria.Produtos;
 using relicarioApi.Models;
+using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Produtos;
 using System;
 using System.Diagnostics;
@@ -15,12 +16,16 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
     public class CreateGaleriaProdutoHandler : IRequestHandler<CreateGaleriaProdutoRequest, CreateGaleriaProdutoResponse>
     {
         private readonly IGaleriaProdutoRepository _galeriaProdutoRepository;
+        private readonly IProdutoGaleriaFotoRepository _galeriaProdutoFotoRepository;
+        private readonly IProdutoLojaRepository _produtoLojaRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public CreateGaleriaProdutoHandler(IGaleriaProdutoRepository galeriaProdutoRepository, IMapper mapper, IUnitOfWork uow)
+        public CreateGaleriaProdutoHandler(IProdutoLojaRepository produtoLojaRepository, IProdutoGaleriaFotoRepository galeriaProdutoFotoRepository, IGaleriaProdutoRepository galeriaProdutoRepository, IMapper mapper, IUnitOfWork uow)
         {
+            _produtoLojaRepository = produtoLojaRepository;
             _galeriaProdutoRepository = galeriaProdutoRepository;
+            _galeriaProdutoFotoRepository = galeriaProdutoFotoRepository;
             _mapper = mapper;
             _uow = uow;
         }
@@ -29,6 +34,15 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
         {
             try
             {
+                if (request.ProdutoLojaId != Guid.Empty)
+                {
+                    var prodLoja = _produtoLojaRepository.Get(request.ProdutoLojaId);
+                    if (prodLoja != null)
+                    {
+                        request.ProdutoLojaNome = prodLoja.Nome;
+                    }
+                }
+
                 var galeriaProduto = _mapper.Map<ProdutoGaleria>(request);
 
                 if (_galeriaProdutoRepository.FindByNome(galeriaProduto.Nome) != null)
@@ -47,6 +61,14 @@ namespace relicarioApi.Domain.Handlers.Galeria.Produtos
                 }
 
                 _galeriaProdutoRepository.Save(galeriaProduto);
+
+                foreach (var foto in request.FotosList)
+                {
+                    foto.ProdutoGaleriaId = galeriaProduto.Id;
+                    var produtoFoto = _mapper.Map<ProdutoGaleriaFoto>(foto);
+                    _galeriaProdutoFotoRepository.Save(produtoFoto);
+                }
+
                 _uow.Commit();
                 return Task.FromResult(_mapper.Map<CreateGaleriaProdutoResponse>(galeriaProduto));
             }

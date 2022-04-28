@@ -11,6 +11,7 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLojaRelacionado
         public Guid ProdutoPrincipalId { get; set; }
         [Required(ErrorMessage = "É necessário informar o id do produto relacionado")]
         public Guid ProdutoRelacionadoId { get; set; }
+        public string ProdutoRelacionadoNome { get; set; }
 
     }
 }

@@ -59,7 +59,7 @@ namespace relicarioApi.Repositories.Galeria.Categorias
                 queryCat = queryCat.Where(x => param.Codigos.Contains(x.Codigo));
             }
 
-            return queryCat.AsEnumerable();
+            return queryCat.OrderBy(x => x.Codigo).AsEnumerable();
         }
 
         public void Save(CategoriaGaleria categoria)

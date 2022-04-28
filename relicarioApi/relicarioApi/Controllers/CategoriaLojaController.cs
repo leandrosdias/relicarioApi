@@ -21,6 +21,21 @@ namespace relicarioApi.Controllers
         public async Task<IActionResult> Get([FromServices] IMediator handler,
             [FromQuery] GetCategoriaLojaRequest request)
         {
+
+            if (request.Codigos != null)
+            {
+                request.Codigos = request.Codigos.Where(x => x != null).ToList();
+
+                var resultCods = new List<string>();
+
+                foreach (var cod in request.Codigos)
+                {
+                    resultCods.AddRange(cod.Split(','));
+                }
+
+                request.Codigos = resultCods;
+            }
+
             var result = await handler.Send(request);
             return result.Sucess ? Ok(result) : NotFound(result);
         }

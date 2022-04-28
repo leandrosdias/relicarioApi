@@ -52,7 +52,8 @@ namespace relicarioApi.Repositories
                 categoriasQuery = categoriasQuery.Where(x => param.Codigos.Contains(x.Codigo));
             }
 
-            return categoriasQuery.AsEnumerable();
+
+            return categoriasQuery.OrderBy(x => x.Codigo).AsEnumerable();
         }
 
         public void Delete(DeleteCategoriaLojaRequest request)
@@ -68,11 +69,17 @@ namespace relicarioApi.Repositories
         public CategoriaLoja Update(CategoriaLoja categoriaLoja)
         {
             var categoriaDb = _context.LojaCategorias.FirstOrDefault(x => x.Id == categoriaLoja.Id);
+
             if (categoriaDb == null)
             {
 #pragma warning disable S112 // General exceptions should never be thrown
                 throw new Exception(message: $"Categoria de loja não encotrado para atualizar: {categoriaDb?.Id}");
 #pragma warning restore S112 // General exceptions should never be thrown
+            }
+
+            if (_context.LojaCategorias.Any(x => x.Id != categoriaLoja.Id && x.Codigo == categoriaLoja.Codigo))
+            {
+                throw new Exception(message: $"Já existe outra categoria com o código: {categoriaLoja?.Codigo}");
             }
 
             categoriaDb.BarraSuperior = categoriaLoja.BarraSuperior;

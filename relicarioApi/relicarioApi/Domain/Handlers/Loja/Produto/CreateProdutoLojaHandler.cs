@@ -9,18 +9,22 @@ using System.Threading.Tasks;
 using relicarioApi.Models;
 using System;
 using System.Diagnostics;
+using relicarioApi.Repositories.Loja.Produtos;
 
 namespace relicarioApi.Domain.Handlers
 {
     public class CreateProdutoLojaHandler : IRequestHandler<CreateProdutoLojaRequest, CreateProdutoLojaResponse>
     {
         private readonly IProdutoLojaRepository _produtoLojaRepository;
+        private readonly IProdutoLojaFotoRepository _produtoLojaFotoRepository;
+
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public CreateProdutoLojaHandler(IProdutoLojaRepository produtoLojaRepository, IMapper mapper, IUnitOfWork uow)
+        public CreateProdutoLojaHandler(IProdutoLojaRepository produtoLojaRepository, IProdutoLojaFotoRepository produtoLojaFotoRepository, IMapper mapper, IUnitOfWork uow)
         {
             _produtoLojaRepository = produtoLojaRepository;
+            _produtoLojaFotoRepository = produtoLojaFotoRepository;
             _mapper = mapper;
             _uow = uow;
         }
@@ -37,6 +41,14 @@ namespace relicarioApi.Domain.Handlers
                 }
 
                 _produtoLojaRepository.Save(produtoLoja);
+
+                foreach (var foto in request.Fotos)
+                {
+                    foto.ProdutoLojaId = produtoLoja.Id;
+                    var produtoLojaFoto = _mapper.Map<ProdutoLojaFoto>(foto);
+                    _produtoLojaFotoRepository.Save(produtoLojaFoto);
+                }
+
                 _uow.Commit();
                 return Task.FromResult(_mapper.Map<CreateProdutoLojaResponse>(produtoLoja));
             }

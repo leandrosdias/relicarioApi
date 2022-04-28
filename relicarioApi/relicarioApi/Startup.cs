@@ -14,6 +14,7 @@ using relicarioApi.Repositories;
 using relicarioApi.Repositories.Galeria.Artistas;
 using relicarioApi.Repositories.Galeria.Categorias;
 using relicarioApi.Repositories.Galeria.Produtos;
+using relicarioApi.Repositories.Home.Depoimento;
 using relicarioApi.Repositories.Home.Numeros;
 using relicarioApi.Repositories.Home.Valores;
 using relicarioApi.Repositories.Loja.Produtos;
@@ -62,6 +63,7 @@ namespace relicarioApi
             services.AddTransient<IValoresRepository, ValoresRepository>();
             services.AddTransient<INumerosRepository, NumerosRepository>();
             services.AddTransient<IParametersRepository, ParametersRepository>();
+            services.AddTransient<IDepoimentoRepository, DepoimentoRepository>();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 

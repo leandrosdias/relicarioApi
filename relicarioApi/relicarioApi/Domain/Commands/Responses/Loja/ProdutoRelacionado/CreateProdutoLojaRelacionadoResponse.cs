@@ -18,5 +18,6 @@ namespace relicarioApi.Domain.Commands.Responses.ProdutoLojaRelacionado
         public Guid ProdutoPrincipalId { get; set; }
         public Models.ProdutoLoja ProdutoRelacionado { get; set; }
         public Guid ProdutoRelacionadoId { get; set; }
+        public string ProdutoRelacionadoNome { get; set; }
     }
 }

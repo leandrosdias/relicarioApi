@@ -24,7 +24,7 @@ namespace relicarioApi.Domain.Handlers.ProdutoLojaAtributo
         {
             try
             {
-                return await Task.FromResult(new GetProdutoLojaAtributoResponse(_produtoLojaAtributoRepository.Get(request)));
+                return await Task.FromResult(new GetProdutoLojaAtributoResponse(_produtoLojaAtributoRepository.Get(request), request.SelectDistinct));
             }
             catch (Exception e)
             {

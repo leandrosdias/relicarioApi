@@ -11,5 +11,6 @@ namespace relicarioApi.Domain.Commands.Requests.ProdutoLoja
         public List<string> Codigos { get; set; }
         public Guid CategoriaLojaId { get; set; }
         public string Nome { get; set; }
+        public bool GetNames { get; set; }
     }
 }

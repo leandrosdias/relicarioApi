@@ -8,6 +8,6 @@ namespace relicarioApi.Domain.Commands.Requests.System.Parameter
     {
         public Guid Id { get; set; }
         public string Param { get; set; }
-
+        public string Categoria { get; set; }
     }
 }

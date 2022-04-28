@@ -26,6 +26,15 @@ namespace relicarioApi.Repositories.Galeria.Produtos
             }
         }
 
+        public void Delete(Guid id)
+        {
+            var produto = _context.ProdutoGaleriaFotos.FirstOrDefault(x => x.Id == id);
+            if (produto != null)
+            {
+                _context.Remove(produto);
+            }
+        }
+
         public IEnumerable<ProdutoGaleriaFoto> Get(GetProdutoGaleriaFotoRequest param)
         {
             var queryProduto = _context.ProdutoGaleriaFotos.AsQueryable();
@@ -37,7 +46,7 @@ namespace relicarioApi.Repositories.Galeria.Produtos
 
             if (param.ProdutoGaleriaId != Guid.Empty)
             {
-                return queryProduto.Where(x => x.Id == param.Id);
+                return queryProduto.Where(x => x.ProdutoGaleriaId == param.ProdutoGaleriaId);
             }
 
             return queryProduto.ToList();

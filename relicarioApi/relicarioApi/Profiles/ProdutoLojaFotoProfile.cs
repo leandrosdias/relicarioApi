@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using relicarioApi.Domain.Commands.Requests.Loja.ProdutoFoto;
 using relicarioApi.Domain.Commands.Responses.Loja.ProdutoFoto;
+using relicarioApi.Models;
 
 namespace relicarioApi.Profiles
 {
-    public class ProdutoLojaFoto : Profile
+    public class ProdutoLojaFotoProfile : Profile
     {
-        public ProdutoLojaFoto()
+        public ProdutoLojaFotoProfile()
         {
             CreateMap<CreateProdutoLojaFotoRequest, ProdutoLojaFoto>();
             CreateMap<ChangeProdutoLojaFotoRequest, ProdutoLojaFoto>();

@@ -14,14 +14,16 @@ namespace relicarioApi.Models
         public decimal PrecoOriginal { get; set; }
         public decimal PrecoPromocional { get; set; }
         public int Estoque { get; set; }
-        public string Peso { get; set; }
+        public decimal Peso { get; set; }
         public decimal Comprimento { get; set; }
         public decimal Altura { get; set; }
         public decimal Largura { get; set; }
+        public bool Status { get; set; }
         public virtual CategoriaLoja CategoriaLoja { get; set; }
         public Guid CategoriaLojaId { get; set; }
         public virtual List<ProdutoLojaAtributo> ProdutoLojaAtributos { get; set; }
         public virtual List<ProdutoLojaRelacionado> ProdutosRelacionados { get; set; }
-        public virtual List<ProdutoLojaFoto> Fotos { get; set; }
+        public virtual List<ProdutoLojaFoto> FotosProduto { get; set; }
+        public string SelectDisplay => Codigo + " - " + Nome;
     }
 }

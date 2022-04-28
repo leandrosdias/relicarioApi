@@ -1,5 +1,6 @@
 ﻿using relicarioApi.Domain.Commands.Requests.ProdutoLojaAtributo;
 using relicarioApi.Models;
+using System;
 using System.Collections.Generic;
 
 namespace relicarioApi.Repositories
@@ -10,5 +11,6 @@ namespace relicarioApi.Repositories
         IEnumerable<ProdutoLojaAtributo> Get(GetProdutoLojaAtributoRequest param);
         ProdutoLojaAtributo Update(ProdutoLojaAtributo produtoAtributo);
         void Delete(DeleteProdutoLojaAtributoRequest request);
+        void Delete(Guid id);
     }
 }

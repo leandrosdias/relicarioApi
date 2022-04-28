@@ -50,5 +50,15 @@ namespace relicarioApi.Controllers
             var response = await handler.Send(request);
             return response.Sucess ? NoContent() : NotFound(response);
         }
+
+        [HttpPost]
+        [Route("List")]
+        [Produces(typeof(ChangeListProdutoGaleriaFotoResponse))]
+        public async Task<IActionResult> UpdateList([FromServices] IMediator handler,
+            [FromBody] ChangeListProdutoGaleriaFotoRequest request)
+        {
+            var response = await handler.Send(request);
+            return response.Sucess ? NoContent() : NotFound(response);
+        }
     }
 }

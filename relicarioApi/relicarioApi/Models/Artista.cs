@@ -10,5 +10,6 @@ namespace relicarioApi.Models
         public string DescricaoCurta { get; set; }
         [JsonIgnore]
         public virtual List<ProdutoGaleria> Produtos { get; set; }
+        public byte[] Foto { get; set; }
     }
 }

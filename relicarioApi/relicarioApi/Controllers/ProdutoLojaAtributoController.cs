@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using relicarioApi.Domain.Commands.Requests.Loja.ProdutoAtributo;
 using relicarioApi.Domain.Commands.Requests.ProdutoLojaAtributo;
+using relicarioApi.Domain.Commands.Responses.Loja.ProdutoAtributos;
 using relicarioApi.Domain.Commands.Responses.ProdutoLojaAtributo;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,16 @@ namespace relicarioApi.Controllers
         [Produces(typeof(DeleteProdutoLojaAtributoResponse))]
         public async Task<IActionResult> Delete([FromServices] IMediator handler,
             [FromQuery] DeleteProdutoLojaAtributoRequest request)
+        {
+            var response = await handler.Send(request);
+            return response.Sucess ? NoContent() : NotFound(response);
+        }
+
+        [HttpPost]
+        [Route("List")]
+        [Produces(typeof(ChangeListProdutoAtributoResponse))]
+        public async Task<IActionResult> UpdateList([FromServices] IMediator handler,
+            [FromBody] ChangeListProdutoAtributoRequest request)
         {
             var response = await handler.Send(request);
             return response.Sucess ? NoContent() : NotFound(response);

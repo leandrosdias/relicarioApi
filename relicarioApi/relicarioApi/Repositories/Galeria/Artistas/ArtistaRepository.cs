@@ -67,6 +67,7 @@ namespace relicarioApi.Repositories.Galeria.Artistas
             artistaDb.DescricaoCurta = artista.DescricaoCurta;
             artistaDb.DescricaoLonga = artista.DescricaoLonga;
             artistaDb.Nome = artista.Nome;
+            artistaDb.Foto = artista.Foto;
 
             return artistaDb;
         }

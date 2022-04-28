@@ -26,6 +26,15 @@ namespace relicarioApi.Repositories
             }
         }
 
+        public void Delete(Guid id)
+        {
+            var produto = _context.LojaProdutosAtributo.FirstOrDefault(x => x.Id == id);
+            if (produto != null)
+            {
+                _context.Remove(produto);
+            }
+        }
+
         public IEnumerable<ProdutoLojaAtributo> Get(GetProdutoLojaAtributoRequest param)
         {
             if (param.Id != Guid.Empty)

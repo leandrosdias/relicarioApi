@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace relicarioApi.Domain.Commands.Responses.ProdutoLojaAtributo
@@ -15,11 +16,19 @@ namespace relicarioApi.Domain.Commands.Responses.ProdutoLojaAtributo
 
         }
 
-        public GetProdutoLojaAtributoResponse(IEnumerable<Models.ProdutoLojaAtributo> produtos)
+        public GetProdutoLojaAtributoResponse(IEnumerable<Models.ProdutoLojaAtributo> atributos, bool distinct)
         {
-            Produtos = produtos;
+            if (!distinct)
+            {
+                Atributos = atributos;
+            }
+            else
+            {
+                AtributoNameList = atributos.Select(x => x.Nome).Distinct();
+            }
         }
-        
-        public IEnumerable<Models.ProdutoLojaAtributo> Produtos { get; set; }
+
+        public IEnumerable<Models.ProdutoLojaAtributo> Atributos { get; set; }
+        public IEnumerable<string> AtributoNameList { get; set; }
     }
 }

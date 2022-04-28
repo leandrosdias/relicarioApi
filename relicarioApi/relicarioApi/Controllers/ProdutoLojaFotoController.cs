@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using relicarioApi.Domain.Commands.Requests.Loja.ProdutoFoto;
 using relicarioApi.Domain.Commands.Responses.Loja.ProdutoFoto;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace relicarioApi.Controllers
@@ -29,6 +30,16 @@ namespace relicarioApi.Controllers
         {
             var response = await handler.Send(request);
             return response.Sucess ? CreatedAtAction(nameof(Get), response) : BadRequest(response);
+        }
+
+        [HttpPost]
+        [Route("List")]
+        [Produces(typeof(ChangeListProdutoFotoResponse))]
+        public async Task<IActionResult> UpdateList([FromServices] IMediator handler,
+            [FromBody] ChangeListProdutoFotoRequest request)
+        {
+            var response = await handler.Send(request);
+            return response.Sucess ? NoContent() : NotFound(response);
         }
 
         [HttpPut("{id}")]

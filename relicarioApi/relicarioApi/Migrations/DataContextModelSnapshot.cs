@@ -29,6 +29,9 @@ namespace relicarioApi.Migrations
                     b.Property<string>("DescricaoLonga")
                         .HasColumnType("text");
 
+                    b.Property<byte[]>("Foto")
+                        .HasColumnType("longblob");
+
                     b.Property<DateTime>("Inserted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime");
@@ -113,6 +116,37 @@ namespace relicarioApi.Migrations
                     b.ToTable("LOJA_CATEGORIA");
                 });
 
+            modelBuilder.Entity("relicarioApi.Models.Depoimento", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Foto")
+                        .HasColumnType("longblob");
+
+                    b.Property<DateTime>("Inserted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Sequencia")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DEPOIMENTO");
+                });
+
             modelBuilder.Entity("relicarioApi.Models.Numeros", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -143,6 +177,12 @@ namespace relicarioApi.Migrations
                     b.Property<byte[]>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("Categoria")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Content")
+                        .HasColumnType("longblob");
 
                     b.Property<DateTime>("Inserted")
                         .ValueGeneratedOnAdd()
@@ -202,6 +242,9 @@ namespace relicarioApi.Migrations
 
                     b.Property<byte[]>("ProdutoLojaId")
                         .HasColumnType("varbinary(16)");
+
+                    b.Property<string>("ProdutoLojaNome")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -291,14 +334,17 @@ namespace relicarioApi.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("text");
 
-                    b.Property<string>("Peso")
-                        .HasColumnType("text");
+                    b.Property<decimal>("Peso")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal>("PrecoOriginal")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal>("PrecoPromocional")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -391,6 +437,9 @@ namespace relicarioApi.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<string>("ProdutoRelacionadoNome")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProdutoPrincipalId");
@@ -469,19 +518,17 @@ namespace relicarioApi.Migrations
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoLojaAtributo", b =>
                 {
-                    b.HasOne("relicarioApi.Models.ProdutoLoja", "ProdutoLoja")
+                    b.HasOne("relicarioApi.Models.ProdutoLoja", null)
                         .WithMany("ProdutoLojaAtributos")
                         .HasForeignKey("ProdutoLojaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ProdutoLoja");
                 });
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoLojaFoto", b =>
                 {
                     b.HasOne("relicarioApi.Models.ProdutoLoja", null)
-                        .WithMany("Fotos")
+                        .WithMany("FotosProduto")
                         .HasForeignKey("ProdutoLojaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -523,7 +570,7 @@ namespace relicarioApi.Migrations
 
             modelBuilder.Entity("relicarioApi.Models.ProdutoLoja", b =>
                 {
-                    b.Navigation("Fotos");
+                    b.Navigation("FotosProduto");
 
                     b.Navigation("ProdutoLojaAtributos");
 
